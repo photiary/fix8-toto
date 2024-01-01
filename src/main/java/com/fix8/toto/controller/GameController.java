@@ -1,10 +1,14 @@
 package com.fix8.toto.controller;
 
 import com.fix8.toto.dto.GameDto;
+import com.fix8.toto.dto.GameDtoList;
+import com.fix8.toto.entity.Game;
 import com.fix8.toto.service.GameService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,5 +31,14 @@ public class GameController {
        return gameService.findAll()
                .stream().map(game -> modelMapper.map(game, GameDto.class))
                .collect(Collectors.toList());
+    }
+
+    @PostMapping(path = "/games", consumes = "application/json", produces = "application/json")
+    public List<Game> saveAllGames(@RequestBody GameDtoList gameDtoList) {
+        return gameService.saveAll(gameDtoList
+                .getGames()
+                .stream()
+                .map(gameDto -> modelMapper.map(gameDto, Game.class))
+                .collect(Collectors.toList()));
     }
 }

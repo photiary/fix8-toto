@@ -11,6 +11,9 @@ import java.util.List;
 @Service
 @Transactional
 public class GameService {
+
+
+
     private final GameRepository gameRepository;
 
     @Autowired
@@ -20,5 +23,9 @@ public class GameService {
 
     public List<Game> findAll() {
         return gameRepository.findAll();
+    }
+
+    public List<Game> saveAll(List<Game> gameList) {
+        return gameRepository.saveAll(gameList);
     }
 }
